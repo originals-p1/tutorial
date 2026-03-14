@@ -1,0 +1,993 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../01_%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E5%85%A5%E5%8F%A3_/" rel="prev"/>
+<link href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.5" name="generator"/>
+<title>Chapter 2: 主流程控制器 - Tutorial</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-2">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Tutorial" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Tutorial">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Tutorial
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 2: 主流程控制器
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Tutorial" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Tutorial">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Tutorial
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    LevelDB
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    LevelDB
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/">
+<span class="md-ellipsis">
+    
+  
+    Tutorial: leveldb
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/01_%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%B8%E5%BF%83%E8%AF%BB%E5%86%99%E5%BC%95%E6%93%8E/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 1: 数据库核心读写引擎
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/02_writebatch%E5%8E%9F%E5%AD%90%E6%89%B9%E9%87%8F%E5%86%99%E5%85%A5/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: WriteBatch原子批量写入
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/03_%E9%A2%84%E5%86%99%E6%97%A5%E5%BF%97_wal/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 3: 预写日志（WAL）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/04_memtable%E5%86%85%E5%AD%98%E8%A1%A8%E4%B8%8E%E8%B7%B3%E8%A1%A8/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: MemTable内存表与跳表
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/05_sstable%E6%8E%92%E5%BA%8F%E8%A1%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 5: SSTable排序表文件格式
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/06_%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E4%B8%8Emanifest/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: 版本管理与MANIFEST
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/07_%E5%90%88%E5%B9%B6%E5%8E%8B%E7%BC%A9_compaction/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 7: 合并压缩（Compaction）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/08_%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B1%82%E6%AC%A1%E4%BD%93%E7%B3%BB/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 8: 迭代器层次体系
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/09_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E7%AD%96%E7%95%A5/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 9: 布隆过滤器与过滤策略
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/10_lru%E7%BC%93%E5%AD%98%E4%B8%8Etablecache/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 10: LRU缓存与TableCache
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    PocketFlow 教程
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    PocketFlow 教程
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    
+  
+    Tutorial: PocketFlow-Tutorial-Codebase-Knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01_%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E5%85%A5%E5%8F%A3_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 1: 用户交互入口
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: 主流程控制器
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: 主流程控制器
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        为什么需要“主流程控制器”？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      
+        核心思想：像拼乐高一样组装流程
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      
+        举个栗子 🌰：主流程控制器怎么“指挥”？
+      
+    </span>
+</a>
+<nav aria-label="举个栗子 🌰：主流程控制器怎么“指挥”？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+<span class="md-ellipsis">
+      
+        🔍 逐行解读（超简单版）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+<span class="md-ellipsis">
+      
+        内部工作流：指挥棒动起来！
+      
+    </span>
+</a>
+<nav aria-label="内部工作流：指挥棒动起来！" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+<span class="md-ellipsis">
+      
+        📌 关键细节（新手必读）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+<span class="md-ellipsis">
+      
+        代码拆解：主流程控制器怎么被调用？
+      
+    </span>
+</a>
+<nav aria-label="代码拆解：主流程控制器怎么被调用？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1shared">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 1：准备“任务单”（shared 字典）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2create_tutorial_flow">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 2：创建流程（create_tutorial_flow()）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3runshared">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 3：启动执行（run(shared)）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+<span class="md-ellipsis">
+      
+        小结：你学到了什么？
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 3: 代码仓库抓取引擎
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04_%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%89%AB%E6%8F%8F%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: 本地文件扫描器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 5: 抽象概念识别器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06_llm_%E8%B0%83%E7%94%A8%E4%B8%AD%E6%9E%A2_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: LLM 调用中枢
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 7: 关系图谱构建器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08_%E6%95%99%E7%A8%8B%E7%AB%A0%E8%8A%82%E7%BC%96%E6%8E%92%E5%B8%88_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 8: 教程章节编排师
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09_%E5%88%86%E6%AD%A5%E6%95%99%E7%A8%8B%E7%94%9F%E6%88%90%E5%99%A8_%E6%89%B9%E5%A4%84%E7%90%86__/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 9: 分步教程生成器（批处理）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10_%E6%95%99%E7%A8%8B%E6%95%B4%E5%90%88%E5%8F%91%E5%B8%83%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 10: 教程整合发布器
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        为什么需要“主流程控制器”？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      
+        核心思想：像拼乐高一样组装流程
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      
+        举个栗子 🌰：主流程控制器怎么“指挥”？
+      
+    </span>
+</a>
+<nav aria-label="举个栗子 🌰：主流程控制器怎么“指挥”？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+<span class="md-ellipsis">
+      
+        🔍 逐行解读（超简单版）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+<span class="md-ellipsis">
+      
+        内部工作流：指挥棒动起来！
+      
+    </span>
+</a>
+<nav aria-label="内部工作流：指挥棒动起来！" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+<span class="md-ellipsis">
+      
+        📌 关键细节（新手必读）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+<span class="md-ellipsis">
+      
+        代码拆解：主流程控制器怎么被调用？
+      
+    </span>
+</a>
+<nav aria-label="代码拆解：主流程控制器怎么被调用？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1shared">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 1：准备“任务单”（shared 字典）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2create_tutorial_flow">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 2：创建流程（create_tutorial_flow()）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3runshared">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 3：启动执行（run(shared)）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+<span class="md-ellipsis">
+      
+        小结：你学到了什么？
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-2">Chapter 2: 主流程控制器</h1>
+<p>上一章我们认识了系统的“贴心门童”——<a href="../01_%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E5%85%A5%E5%8F%A3_/">用户交互入口</a>。它听懂了你的话（比如 <code>--repo https://github.com/...</code>），打包成一份清晰的“任务单”，然后——<strong>交给谁执行呢？</strong></p>
+<p>别急！<br/>
+这位“任务单”的接收者，就是本章的主角：<strong>主流程控制器</strong> 🎼</p>
+<hr/>
+<h2 id="_1">为什么需要“主流程控制器”？</h2>
+<p>想象你要组织一场<strong>音乐会</strong>：</p>
+<ul>
+<li>小提琴手要先调音 ✅  </li>
+<li>钢琴师要等小提琴定调后再加入 ✅  </li>
+<li>指挥不能让鼓手在小提琴没开始时就敲鼓 ❌  </li>
+</ul>
+<p>如果没有指挥——所有乐手各自为战，音乐就会变成噪音 🎻🎹🥁</p>
+<p>而你的教程生成任务，也是一场“知识协奏曲”：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>负责角色</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1️⃣ 抓取代码</td>
+<td>代码仓库抓取引擎</td>
+<td>🎻 小提琴手：先准备素材</td>
+</tr>
+<tr>
+<td>2️⃣ 提炼概念</td>
+<td>抽象概念识别器</td>
+<td>🎹 钢琴师：从素材中找出主旋律</td>
+</tr>
+<tr>
+<td>3️⃣ 建关系图谱</td>
+<td>关系图谱构建器</td>
+<td>🥁 鼓手：确定节奏与结构</td>
+</tr>
+<tr>
+<td>4️⃣ 编排章节</td>
+<td>教程章节编排师</td>
+<td>🎼 指挥：安排乐章顺序</td>
+</tr>
+<tr>
+<td>5️⃣ 写教程章节</td>
+<td>分步教程生成器</td>
+<td>🎼 各声部演奏</td>
+</tr>
+<tr>
+<td>6️⃣ 合并发布</td>
+<td>教程整合发布器</td>
+<td>📀 录音成碟</td>
+</tr>
+</tbody>
+</table>
+<p>👉 <strong>主流程控制器</strong>，就是那位<strong>交响乐指挥家</strong>——它不亲自演奏，却精准调度每一位“乐手”，确保：
+- 顺序对（先抓代码，再抽象）
+- 出错能重试（某个乐手跑调了？指挥喊“再来一遍！”）
+- 错误不中断（鼓手摔鼓槌了？指挥改用钢琴补位）</p>
+<blockquote>
+<p>💡 <strong>一句话定义</strong>：<br/>
+<strong>主流程控制器 = 用 Pocket Flow 框架编排各节点的执行顺序 + 自动管理重试与错误的调度中枢</strong></p>
+</blockquote>
+<hr/>
+<h2 id="_2">核心思想：像拼乐高一样组装流程</h2>
+<p>在 Pocket Flow 框架中，每个功能模块（比如“抓代码”“识别概念”）都是一个<strong>节点（Node）</strong>。<br/>
+主流程控制器的任务，就是把这些节点按逻辑顺序“串”起来，形成一条<strong>工作流（Flow）</strong>。</p>
+<p>我们来看一个真实例子 🌰：</p>
+<p>假设你运行了这条命令（还记得吧？）：</p>
+<pre><code class="language-bash">python main.py --repo https://github.com/PocketFlow-Dev/pocketflow-tutorial-codebase --language chinese
+</code></pre>
+<p>主流程控制器会自动做这些事：</p>
+<ol>
+<li><strong>创建节点实例</strong> </li>
+<li><code>FetchRepo()</code>：负责拉取代码  </li>
+<li><code>IdentifyAbstractions()</code>：负责识别抽象概念  </li>
+<li><code>AnalyzeRelationships()</code>：负责画关系图  </li>
+<li>
+<p>……（其他节点同理）</p>
+</li>
+<li>
+<p><strong>连接节点顺序</strong><br/>
+<code>python
+   抓取代码 → 识别抽象 → 分析关系 → 编排章节 → 写章节 → 合并输出</code></p>
+</li>
+<li>
+<p><strong>启动执行</strong><br/>
+   当你调用 <code>tutorial_flow.run(shared)</code>，整个流程自动启动！</p>
+</li>
+</ol>
+<blockquote>
+<p>✅ <strong>关键理念</strong>：<br/>
+你<strong>不用写任何循环或条件判断</strong>——Pocket Flow 自动处理依赖、重试、失败回滚。</p>
+</blockquote>
+<hr/>
+<h2 id="_3">举个栗子 🌰：主流程控制器怎么“指挥”？</h2>
+<p>下面是一段简化版的主流程创建代码（来自 <a href="flow.py"><code>flow.py</code></a>）：</p>
+<pre><code class="language-python">from pocketflow import Flow
+from nodes import (
+    FetchRepo,
+    IdentifyAbstractions,
+    AnalyzeRelationships,
+    OrderChapters,
+    WriteChapters,
+    CombineTutorial
+)
+
+def create_tutorial_flow():
+    # 创建6个节点（就像准备6个乐手）
+    fetch_repo = FetchRepo()
+    identify_abstractions = IdentifyAbstractions(max_retries=5, wait=20)
+    analyze_relationships = AnalyzeRelationships(max_retries=5, wait=20)
+    order_chapters = OrderChapters(max_retries=5, wait=20)
+    write_chapters = WriteChapters(max_retries=5, wait=20)
+    combine_tutorial = CombineTutorial()
+
+    # 用 "&gt;&gt;" 符号连接节点（像拉琴弓一样连成一条线）
+    fetch_repo &gt;&gt; identify_abstractions
+    identify_abstractions &gt;&gt; analyze_relationships
+    analyze_relationships &gt;&gt; order_chapters
+    order_chapters &gt;&gt; write_chapters
+    write_chapters &gt;&gt; combine_tutorial
+
+    # 创建流程，指定起点（就像指挥举起指挥棒）
+    tutorial_flow = Flow(start=fetch_repo)
+
+    return tutorial_flow
+</code></pre>
+<h3 id="_4">🔍 逐行解读（超简单版）</h3>
+<table>
+<thead>
+<tr>
+<th>行号</th>
+<th>代码</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>from pocketflow import Flow</code></td>
+<td>导入“指挥棒”工具包</td>
+</tr>
+<tr>
+<td>2–8</td>
+<td><code>from nodes import ...</code></td>
+<td>把6个“乐手”（节点类）请进排练厅</td>
+</tr>
+<tr>
+<td>10–15</td>
+<td><code>fetch_repo = ...</code></td>
+<td>实例化每个节点（乐手就位）</td>
+</tr>
+<tr>
+<td>16–20</td>
+<td><code>&gt;&gt;</code> 连接</td>
+<td><strong>定义执行顺序</strong>：<code>A &gt;&gt; B</code> 表示“A 完成后自动触发 B”</td>
+</tr>
+<tr>
+<td>22–23</td>
+<td><code>Flow(start=...)</code></td>
+<td><strong>启动指令</strong>：告诉系统“从 <code>fetch_repo</code> 开始”</td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>return tutorial_flow</code></td>
+<td>返回整套“乐谱”</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>注意</strong>：<br/>
+- <code>max_retries=5</code> 表示：如果某个节点失败，最多重试 5 次<br/>
+- <code>wait=20</code> 表示：每次重试前等待 20 秒（避免频繁请求 GitHub）<br/>
+- <code>WriteChapters</code> 是 <code>BatchNode</code>（批量节点），会一次性处理多个任务（后续章节详解）</p>
+</blockquote>
+<hr/>
+<h2 id="_5">内部工作流：指挥棒动起来！</h2>
+<p>我们用一个极简的时序图，看看主流程控制器<strong>启动后发生了什么</strong>：</p>
+<div class="mermaid">sequenceDiagram
+    participant U as 用户 (main.py)
+    participant FC as create_tutorial_flow()
+    participant F as Flow 实例
+    participant N1 as FetchRepo
+    participant N2 as IdentifyAbstractions
+    participant N6 as CombineTutorial
+
+    U-&gt;&gt;FC: 调用 create_tutorial_flow()
+    FC-&gt;&gt;F: 创建 Flow(start=FetchRepo)
+    F-&gt;&gt;N1: 启动节点：抓取代码
+    N1-&gt;&gt;N1: 拉取 GitHub 仓库到本地
+    N1-&gt;&gt;N2: ✅ 成功 → 触发下一节点
+    N2-&gt;&gt;N2: 从代码中识别出“用户登录”“权限校验”等抽象概念
+    N2-&gt;&gt;N6: ...（中间节点省略）... → 最终触发 CombineTutorial
+    N6-&gt;&gt;U: 🎉 生成完整教程！输出到 output/ 目录
+</div>
+<h3 id="_6">📌 关键细节（新手必读）</h3>
+<ul>
+<li>
+<p><strong>数据怎么流动？</strong><br/>
+  每个节点<strong>读写同一个 <code>shared</code> 字典</strong>（你在 <code>main.py</code> 里创建的那个！）<br/>
+  例如：
+  <code>python
+  shared["files"] = [...]   # FetchRepo 写入
+  shared["abstractions"] = [...]  # IdentifyAbstractions 读取后追加
+  shared["final_output_dir"] = "/app/output/tutorial"  # CombineTutorial 最终写入</code></p>
+</li>
+<li>
+<p><strong>出错怎么办？</strong> </p>
+</li>
+<li>如果 <code>FetchRepo</code> 失败（比如网络断了），系统自动重试 5 次  </li>
+<li>若仍失败 → 抛出异常，流程停止（但不会影响已生成的部分）  </li>
+<li>
+<p>所有重试逻辑由 Pocket Flow <strong>自动处理</strong>，你无需写 <code>try...except</code></p>
+</li>
+<li>
+<p><strong>为什么不用 <code>if-else</code>？</strong><br/>
+  因为节点间是<strong>数据驱动的依赖关系</strong>——只要前一个节点输出了 <code>shared["files"]</code>，后一个节点就自动触发。<br/>
+  这就像多米诺骨牌：推倒第一块，后面的自然倒下 🎯</p>
+</li>
+</ul>
+<hr/>
+<h2 id="_7">代码拆解：主流程控制器怎么被调用？</h2>
+<p>还记得 <code>main.py</code> 中的最后一行吗？<br/>
+👉 就是这句：</p>
+<pre><code class="language-python">tutorial_flow = create_tutorial_flow()  # ← 创建指挥棒
+tutorial_flow.run(shared)               # ← 开始演出！
+</code></pre>
+<p>我们把它展开成 3 步，更清晰：</p>
+<h3 id="1shared">✅ 步骤 1：准备“任务单”（<code>shared</code> 字典）</h3>
+<pre><code class="language-python">shared = {
+    "repo_url": "https://github.com/PocketFlow-Dev/...",
+    "language": "chinese",
+    "files": [],  # 留空，等 FetchRepo 填充
+    "abstractions": [],  # 等 IdentifyAbstractions 填充
+    # ...
+}
+</code></pre>
+<blockquote>
+<p>📝 这份“任务单”会<strong>贯穿整个流程</strong>，像接力棒一样在节点间传递。</p>
+</blockquote>
+<h3 id="2create_tutorial_flow">✅ 步骤 2：创建流程（<code>create_tutorial_flow()</code>）</h3>
+<p>调用后返回一个 <code>Flow</code> 对象，它内部已预设好：
+- 节点顺序<br/>
+- 重试策略<br/>
+- 数据流向  </p>
+<h3 id="3runshared">✅ 步骤 3：启动执行（<code>run(shared)</code>）</h3>
+<pre><code class="language-python">tutorial_flow.run(shared)
+</code></pre>
+<ul>
+<li>系统<strong>自动调用 <code>fetch_repo.run(shared)</code></strong></li>
+<li>成功后 → 自动调用 <code>identify_abstractions.run(shared)</code></li>
+<li>如此依次执行，直到 <code>combine_tutorial</code></li>
+</ul>
+<blockquote>
+<p>🌟 <strong>你不需要写任何循环！</strong><br/>
+就像按下 CD 播放器的“播放”键——整张专辑会自动顺序播放。</p>
+</blockquote>
+<hr/>
+<h2 id="_8">小结：你学到了什么？</h2>
+<p>✅ <strong>主流程控制器 = 调度中枢 + 自动重试机制 + 数据流编排器</strong><br/>
+✅ 它让复杂任务（抓代码→识别→生成）变得像搭积木一样简单<br/>
+✅ 所有节点共享 <code>shared</code> 字典，像一个“中央黑板”记录进度<br/>
+✅ Pocket Flow 框架接管了重试、错误处理等脏活累活</p>
+<blockquote>
+<p>🚀 下一步：<br/>
+既然指挥棒已举起，第一个“乐手”——<strong>代码仓库抓取引擎</strong>——该登场了！<br/>
+请看 <a href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/">第 3 章：代码仓库抓取引擎</a> —— 它负责把 GitHub 仓库“搬”到本地，是整个流程的起点！</p>
+</blockquote>
+<p>现在，不妨打开 <a href="flow.py"><code>flow.py</code></a> 文件，试着画一画节点之间的连接线——<br/>
+就像给交响乐团排练时画出声部顺序图，你会更清楚“指挥”的智慧！ 🎼</p>
+<hr/>
+<p>Generated by <a href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

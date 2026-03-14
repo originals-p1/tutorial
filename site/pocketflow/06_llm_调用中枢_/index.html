@@ -1,0 +1,1226 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/" rel="prev"/>
+<link href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.5" name="generator"/>
+<title>Chapter 6: LLM 调用中枢 - Tutorial</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-6-llm">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Tutorial" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Tutorial">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Tutorial
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 6: LLM 调用中枢
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Tutorial" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Tutorial">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Tutorial
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    LevelDB
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    LevelDB
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/">
+<span class="md-ellipsis">
+    
+  
+    Tutorial: leveldb
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/01_%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%B8%E5%BF%83%E8%AF%BB%E5%86%99%E5%BC%95%E6%93%8E/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 1: 数据库核心读写引擎
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/02_writebatch%E5%8E%9F%E5%AD%90%E6%89%B9%E9%87%8F%E5%86%99%E5%85%A5/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: WriteBatch原子批量写入
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/03_%E9%A2%84%E5%86%99%E6%97%A5%E5%BF%97_wal/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 3: 预写日志（WAL）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/04_memtable%E5%86%85%E5%AD%98%E8%A1%A8%E4%B8%8E%E8%B7%B3%E8%A1%A8/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: MemTable内存表与跳表
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/05_sstable%E6%8E%92%E5%BA%8F%E8%A1%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 5: SSTable排序表文件格式
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/06_%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E4%B8%8Emanifest/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: 版本管理与MANIFEST
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/07_%E5%90%88%E5%B9%B6%E5%8E%8B%E7%BC%A9_compaction/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 7: 合并压缩（Compaction）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/08_%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B1%82%E6%AC%A1%E4%BD%93%E7%B3%BB/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 8: 迭代器层次体系
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/09_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E7%AD%96%E7%95%A5/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 9: 布隆过滤器与过滤策略
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/10_lru%E7%BC%93%E5%AD%98%E4%B8%8Etablecache/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 10: LRU缓存与TableCache
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    PocketFlow 教程
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    PocketFlow 教程
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    
+  
+    Tutorial: PocketFlow-Tutorial-Codebase-Knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01_%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E5%85%A5%E5%8F%A3_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 1: 用户交互入口
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02_%E4%B8%BB%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: 主流程控制器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 3: 代码仓库抓取引擎
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04_%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E6%89%AB%E6%8F%8F%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: 本地文件扫描器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 5: 抽象概念识别器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: LLM 调用中枢
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: LLM 调用中枢
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm">
+<span class="md-ellipsis">
+      
+        为什么需要“LLM 调用中枢”？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm_1">
+<span class="md-ellipsis">
+      
+        举个栗子 🌰：系统如何调用 LLM？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        核心功能：它能做什么？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3">
+<span class="md-ellipsis">
+      
+        怎么用它？——3 分钟上手
+      
+    </span>
+</a>
+<nav aria-label="怎么用它？——3 分钟上手" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1">
+<span class="md-ellipsis">
+      
+        ✅ 示例 1：基础调用（带缓存）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2">
+<span class="md-ellipsis">
+      
+        ✅ 示例 2：强制跳过缓存（实时调试）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3_1">
+<span class="md-ellipsis">
+      
+        ✅ 示例 3：查看日志（排查问题）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      
+        内部工作流：它怎么运作的？
+      
+    </span>
+</a>
+<nav aria-label="内部工作流：它怎么运作的？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      
+        📌 关键细节（新手必读）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+<span class="md-ellipsis">
+      
+        代码拆解：只看最关键的几行！
+      
+    </span>
+</a>
+<nav aria-label="代码拆解：只看最关键的几行！" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#15">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 1：检查缓存（核心！5 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#25">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 2：自动识别供应商（5 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3gemini-8">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 3：Gemini 专用调用（8 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4openai-api-10">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 4：OpenAI 兼容 API 调用（10 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-5">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 5：写入缓存 + 记录日志（5 行）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+<span class="md-ellipsis">
+      
+        它如何与系统其他部分协作？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+<span class="md-ellipsis">
+      
+        小结：你学到了什么？
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 7: 关系图谱构建器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08_%E6%95%99%E7%A8%8B%E7%AB%A0%E8%8A%82%E7%BC%96%E6%8E%92%E5%B8%88_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 8: 教程章节编排师
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09_%E5%88%86%E6%AD%A5%E6%95%99%E7%A8%8B%E7%94%9F%E6%88%90%E5%99%A8_%E6%89%B9%E5%A4%84%E7%90%86__/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 9: 分步教程生成器（批处理）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10_%E6%95%99%E7%A8%8B%E6%95%B4%E5%90%88%E5%8F%91%E5%B8%83%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 10: 教程整合发布器
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm">
+<span class="md-ellipsis">
+      
+        为什么需要“LLM 调用中枢”？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm_1">
+<span class="md-ellipsis">
+      
+        举个栗子 🌰：系统如何调用 LLM？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        核心功能：它能做什么？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3">
+<span class="md-ellipsis">
+      
+        怎么用它？——3 分钟上手
+      
+    </span>
+</a>
+<nav aria-label="怎么用它？——3 分钟上手" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1">
+<span class="md-ellipsis">
+      
+        ✅ 示例 1：基础调用（带缓存）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2">
+<span class="md-ellipsis">
+      
+        ✅ 示例 2：强制跳过缓存（实时调试）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3_1">
+<span class="md-ellipsis">
+      
+        ✅ 示例 3：查看日志（排查问题）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      
+        内部工作流：它怎么运作的？
+      
+    </span>
+</a>
+<nav aria-label="内部工作流：它怎么运作的？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      
+        📌 关键细节（新手必读）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+<span class="md-ellipsis">
+      
+        代码拆解：只看最关键的几行！
+      
+    </span>
+</a>
+<nav aria-label="代码拆解：只看最关键的几行！" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#15">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 1：检查缓存（核心！5 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#25">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 2：自动识别供应商（5 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3gemini-8">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 3：Gemini 专用调用（8 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4openai-api-10">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 4：OpenAI 兼容 API 调用（10 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-5">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 5：写入缓存 + 记录日志（5 行）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+<span class="md-ellipsis">
+      
+        它如何与系统其他部分协作？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+<span class="md-ellipsis">
+      
+        小结：你学到了什么？
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-6-llm">Chapter 6: LLM 调用中枢</h1>
+<p>欢迎来到本教程的第六章！🎉<br/>
+在上一章中，我们学会了如何从代码中<strong>提炼出核心业务概念</strong>（比如“用户登录校验器”“任务调度中心”），并标注它们对应的代码位置。<br/>
+现在——我们终于要接触整个系统的“<strong>智能引擎</strong>”了：  </p>
+<blockquote>
+<p>💡 <strong>LLM 调用中枢 = 系统与 AI 大脑的“通信接口”</strong><br/>
+它像一位可靠的翻译官，负责将复杂提示工程（prompt）安全、高效地发送给 Gemini 或兼容 OpenAI 的模型，并内置缓存、日志、多供应商支持，确保整个流程既智能又可控。</p>
+</blockquote>
+<hr/>
+<h2 id="llm">为什么需要“LLM 调用中枢”？</h2>
+<p>想象你要向一位<strong>外国专家</strong>请教一个专业问题：</p>
+<ul>
+<li>❌ 如果直接用机器翻译软件发消息：可能词不达意、术语错误  </li>
+<li>❌ 如果每次都手动打开网页、粘贴问题、复制答案：效率极低  </li>
+<li>❌ 如果问题重复了：还得重新问一遍（浪费 token！）  </li>
+</ul>
+<p>而你的系统里，<strong>抽象概念识别器</strong>、<strong>关系图谱构建器</strong>、<strong>章节生成器</strong>……都在反复调用 LLM。<br/>
+如果没有一个统一的“中枢”，就会出现：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每个节点自己拼 prompt + 发请求</td>
+<td>代码重复、风格混乱、调试困难</td>
+</tr>
+<tr>
+<td>没有缓存机制</td>
+<td>重复请求相同 prompt → <strong>浪费钱！</strong>（LLM API 按次收费）</td>
+</tr>
+<tr>
+<td>错误处理分散</td>
+<td>某次请求失败，不知道是网络问题还是 API 限流</td>
+</tr>
+<tr>
+<td>切换模型麻烦</td>
+<td>想从 Gemini 换到 Ollama？每个节点都要改代码</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>一句话使命</strong>：<br/>
+<strong>LLM 调用中枢 = 统一调用入口 + 智能缓存 + 多供应商支持 + 全流程日志</strong><br/>
+它让所有模块“只管提需求，不管怎么问”，专注业务逻辑，而非通信细节。</p>
+</blockquote>
+<hr/>
+<h2 id="llm_1">举个栗子 🌰：系统如何调用 LLM？</h2>
+<p>假设你在运行这段代码（来自 <a href="nodes.py"><code>nodes.py</code></a> 的 <code>IdentifyAbstractions.exec()</code>）：</p>
+<pre><code class="language-python">response = call_llm(prompt, use_cache=(use_cache and self.cur_retry == 0))
+</code></pre>
+<p><strong>LLM 调用中枢</strong>立刻行动：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>它做了什么？</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📝 检查缓存</td>
+<td>先查 <code>llm_cache.json</code>：这个 prompt 之前问过吗？</td>
+<td>🗂️ 图书馆员翻查借阅记录</td>
+</tr>
+<tr>
+<td>✅ 命中缓存</td>
+<td>直接返回缓存结果，跳过网络请求！</td>
+<td>🎉 “这本书上次借走了，不用再订！”</td>
+</tr>
+<tr>
+<td>🌐 未命中缓存</td>
+<td>1️⃣ 读取 <code>LLM_PROVIDER</code> 环境变量（如 <code>GEMINI</code>）<br/>2️⃣ 加载对应 API Key 和 Base URL<br/>3️⃣ 构造请求体（model + messages + temperature）</td>
+<td>📡 卫星信号同步：不同国家用不同频率</td>
+</tr>
+<tr>
+<td>📤 发送请求</td>
+<td>通过 HTTP POST 发送 JSON 请求到 LLM 服务</td>
+<td>📩 寄出一封加密信件</td>
+</tr>
+<tr>
+<td>📥 解析响应</td>
+<td>提取 <code>choices[0].message.content</code> 字段</td>
+<td>🔑 打开信封，取出核心内容</td>
+</tr>
+<tr>
+<td>📝 写入缓存</td>
+<td>将 <code>prompt → response</code> 存入 <code>llm_cache.json</code></td>
+<td>📚 把新书录入借阅系统，下次直接借</td>
+</tr>
+<tr>
+<td>📊 记录日志</td>
+<td>写入 <code>logs/llm_calls_*.log</code>：时间、prompt、response、耗时</td>
+<td>📓 详细日志本：方便回溯和调试</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>✅ <strong>最终交付物</strong>：纯文本字符串（LLM 的回答），<strong>无需任何额外解析</strong><br>
+（例如：<code>response = "- name: 用户登录校验器\\n  description: 它就像机场安检口...\\n"</code>）</br></p>
+</blockquote>
+<hr/>
+<h2 id="_1">核心功能：它能做什么？</h2>
+<p>LLM 调用中枢（即 <a href="utils/call_llm.py"><code>call_llm()</code></a>）就像一位<strong>全能的信使 + 智能管家</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+<th>为什么重要？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🔄 统一入口</td>
+<td>所有节点都调用 <code>call_llm(prompt, use_cache)</code>，无需关心底层协议</td>
+<td>🎯 降低耦合，后续可无缝切换模型</td>
+</tr>
+<tr>
+<td>💾 智能缓存</td>
+<td>相同 prompt → 直接复用结果，避免重复收费</td>
+<td>💰 节省成本（尤其调试阶段）</td>
+</tr>
+<tr>
+<td>🌍 多供应商支持</td>
+<td>自动识别 <code>GEMINI</code> / <code>OPENAI</code> / <code>OLLAMA</code> 等（通过环境变量）</td>
+<td>🌐 本地开发用 Ollama，生产用 Gemini，灵活切换</td>
+</tr>
+<tr>
+<td>📊 全流程日志</td>
+<td>记录每次请求的 prompt/response/时间，支持按日期归档</td>
+<td>🔍 快速定位问题（“昨天下午 3 点的调用失败了？”）</td>
+</tr>
+<tr>
+<td>⚠️ 详细错误提示</td>
+<td>区分 HTTP 错误、网络错误、超时、JSON 解析错误</td>
+<td>🛡️ 调试时不再“瞎猜”</td>
+</tr>
+<tr>
+<td>🧪 测试友好</td>
+<td>支持 <code>use_cache=False</code> 强制跳过缓存，方便实时调试</td>
+<td>🧪 单元测试时保证结果实时性</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>关键理念</strong>：<br>
+它<strong>不修改 prompt 内容</strong>——只负责<strong>安全、高效、可追溯地把 prompt 发给 LLM，并把结果送回来</strong>。<br/>
+后续的 <a href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/">关系图谱构建器</a>、<a href="../08_%E6%95%99%E7%A8%8B%E7%AB%A0%E8%8A%82%E7%BC%96%E6%8E%92%E5%B8%88_/">教程章节编排师</a> 都依赖它提供的<strong>稳定、可靠、低成本的 LLM 调用能力</strong>。</br></p>
+</blockquote>
+<hr/>
+<h2 id="3">怎么用它？——3 分钟上手</h2>
+<p>虽然你<strong>不需要直接调用</strong> LLM 调用中枢（它已集成在各节点中），但我们可以用一个<strong>极简示例</strong>演示它的核心逻辑：</p>
+<h3 id="1">✅ 示例 1：基础调用（带缓存）</h3>
+<pre><code class="language-python">from utils.call_llm import call_llm
+
+# 第一次调用（未缓存）
+result1 = call_llm("请用中文解释 '抽象概念' 是什么？", use_cache=True)
+print(result1)
+# 输出：抽象概念是指……（首次请求，耗时较长）
+
+# 第二次调用（命中缓存）
+result2 = call_llm("请用中文解释 '抽象概念' 是什么？", use_cache=True)
+print(result2)
+# 输出：同上！但瞬间返回（直接从 llm_cache.json 读取）
+</code></pre>
+<blockquote>
+<p>📝 <strong>缓存文件位置</strong>：项目根目录下的 <code>llm_cache.json</code><br/>
+✅ <strong>安全提示</strong>：缓存中可能包含敏感 prompt（如代码片段），生产环境建议加密或删除！</p>
+</blockquote>
+<hr/>
+<h3 id="2">✅ 示例 2：强制跳过缓存（实时调试）</h3>
+<pre><code class="language-python"># 调试时确保拿到最新结果
+result = call_llm("请用中文解释 '抽象概念' 是什么？", use_cache=False)
+print(result)
+# 即使缓存存在，也强制重新请求
+</code></pre>
+<hr/>
+<h3 id="3_1">✅ 示例 3：查看日志（排查问题）</h3>
+<pre><code class="language-bash"># 查看今天的所有 LLM 调用日志
+tail -f logs/llm_calls_20250405.log
+</code></pre>
+<p>日志内容示例：</p>
+<pre><code>2025-04-05 14:30:22,123 - INFO - PROMPT: 请用中文解释 '抽象概念' 是什么？
+2025-04-05 14:30:23,456 - INFO - RESPONSE: 抽象概念是指……
+</code></pre>
+<blockquote>
+<p>🔍 <strong>调试技巧</strong>：当某个节点报错时，直接查日志就能看到<strong>完整 prompt 和 LLM 原始响应</strong>，快速定位问题！</p>
+</blockquote>
+<hr/>
+<h2 id="_2">内部工作流：它怎么运作的？</h2>
+<p>我们用一个极简流程图，看它如何“查缓存 → 选供应商 → 发请求 → 记日志”：</p>
+<div class="mermaid">sequenceDiagram
+    participant U as 调用节点 (e.g. IdentifyAbstractions)
+    participant Cache as 缓存检查
+    participant Provider as 供应商选择器
+    participant LLM as LLM 服务 (Gemini/OpenAI/Ollama)
+    participant Logger as 日志记录器
+
+    U-&gt;&gt;Cache: call_llm(prompt, use_cache=True)
+    alt use_cache=True 且命中缓存
+        Cache-&gt;&gt;U: 返回缓存结果 ✅
+    else 未命中或 use_cache=False
+        Cache-&gt;&gt;Provider: 获取 LLM_PROVIDER 环境变量
+        Provider-&gt;&gt;Provider: 判断是 GEMINI / OPENAI / OLLAMA？
+        alt GEMINI
+            Provider-&gt;&gt;LLM: 调用 _call_llm_gemini()
+        else OPENAI/OLLAMA
+            Provider-&gt;&gt;LLM: 调用 _call_llm_provider()
+        end
+        LLM-&gt;&gt;LLM: 发送 HTTP POST 请求
+        LLM--&gt;&gt;Provider: 返回 JSON 响应
+        Provider-&gt;&gt;Cache: 写入缓存 {prompt: response}
+        Cache-&gt;&gt;U: 返回 response
+    end
+    Cache-&gt;&gt;Logger: 记录 PROMPT &amp; RESPONSE
+</div>
+<h3 id="_3">📌 关键细节（新手必读）</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>缓存文件太大怎么办？</strong></td>
+<td>定期删除 <code>llm_cache.json</code>；生产环境建议用 Redis 等专业缓存</td>
+</tr>
+<tr>
+<td><strong>LLM 服务挂了怎么办？</strong></td>
+<td><code>requests</code> 库自动抛出 <code>ConnectionError</code>，节点层有 <code>max_retries=5</code> 重试机制</td>
+</tr>
+<tr>
+<td><strong>怎么切换到本地 Ollama？</strong></td>
+<td>设置环境变量：<br/><code>LLM_PROVIDER=OPENAI</code><br/><code>OPENAI_BASE_URL=http://localhost:11434/v1</code><br/><code>OPENAI_API_KEY=dummy</code>（Ollama 不需要真实 key）</td>
+</tr>
+<tr>
+<td><strong>日志里有敏感信息？</strong></td>
+<td>生产环境建议：<br/>1. 关闭缓存（<code>use_cache=False</code>）<br/>2. 日志脱敏（替换 prompt 中的文件路径）</td>
+</tr>
+<tr>
+<td><strong>Gemini 和 OpenAI 的 API 差异怎么处理？</strong></td>
+<td><code>_call_llm_gemini()</code> 和 <code>_call_llm_provider()</code> 各自处理协议差异，对上层统一返回 <code>str</code></td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="_4">代码拆解：只看最关键的几行！</h2>
+<p>我们聚焦 <a href="utils/call_llm.py"><code>call_llm()</code></a> 中的<strong>核心逻辑</strong>（简化版）：</p>
+<h3 id="15">✅ 步骤 1：检查缓存（核心！5 行）</h3>
+<pre><code class="language-python">def call_llm(prompt: str, use_cache: bool = True) -&gt; str:
+    if use_cache:
+        cache = load_cache()  # 读取 llm_cache.json
+        if prompt in cache:
+            return cache[prompt]  # 命中缓存！直接返回
+
+    # ... 未命中缓存，进入真实调用 ...
+</code></pre>
+<blockquote>
+<p>💡 <strong>关键点</strong>：<br>
+- <code>load_cache()</code> 用 <code>json.load()</code> 读取缓存文件<br>
+- <code>if prompt in cache</code> → 字典键匹配，O(1) 时间复杂度<br>
+- <strong>只缓存完全相同的 prompt</strong>（字符串比较），避免语义误匹配</br></br></br></p>
+</blockquote>
+<hr/>
+<h3 id="25">✅ 步骤 2：自动识别供应商（5 行）</h3>
+<pre><code class="language-python">def get_llm_provider() -&gt; str:
+    provider = os.getenv("LLM_PROVIDER")
+    if not provider and (os.getenv("GEMINI_PROJECT_ID") or os.getenv("GEMINI_API_KEY")):
+        provider = "GEMINI"
+    if not provider and (os.getenv("OPENAI_API_KEY") or os.getenv("OPENAI_BASE_URL")):
+        provider = "OPENAI"
+    if not provider:
+        raise ValueError("LLM_PROVIDER environment variable is required...")
+    return provider
+</code></pre>
+<blockquote>
+<p>🌟 <strong>核心技巧</strong>：<br>
+- 优先检查 <code>LLM_PROVIDER</code>（显式指定）<br>
+- 兜底检查 <code>GEMINI_*</code> 或 <code>OPENAI_*</code> 环境变量（兼容旧配置）<br/>
+- 全部没有 → 抛出明确错误，提示用户配置</br></br></p>
+</blockquote>
+<hr/>
+<h3 id="3gemini-8">✅ 步骤 3：Gemini 专用调用（8 行）</h3>
+<pre><code class="language-python">def _call_llm_gemini(prompt: str) -&gt; str:
+    if os.getenv("GEMINI_PROJECT_ID"):
+        client = genai.Client(
+            vertexai=True,
+            project=os.getenv("GEMINI_PROJECT_ID"),
+            location=os.getenv("GEMINI_LOCATION", "us-central1")
+        )
+    elif os.getenv("GEMINI_API_KEY"):
+        client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    else:
+        raise ValueError("Either GEMINI_PROJECT_ID or GEMINI_API_KEY must be set...")
+
+    model = os.getenv("GEMINI_MODEL", "gemini-2.5-pro-exp-03-25")
+    response = client.models.generate_content(model=model, contents=[prompt])
+    return str(response.text)
+</code></pre>
+<blockquote>
+<p>💡 <strong>关键点</strong>：<br/>
+- 支持两种 Gemini 认证方式：<br/> ① Vertex AI（企业级）<br/> ② API Key（开发者）<br>
+- <code>client.models.generate_content()</code> 是 Google 官方 SDK 的标准调用方式<br>
+- <code>response.text</code> 直接返回纯文本（无 JSON 解析）</br></br></p>
+</blockquote>
+<hr/>
+<h3 id="4openai-api-10">✅ 步骤 4：OpenAI 兼容 API 调用（10 行）</h3>
+<pre><code class="language-python">def _call_llm_provider(prompt: str) -&gt; str:
+    provider = os.environ.get("LLM_PROVIDER")  # e.g. "OPENAI"
+    base_url = os.environ.get(f"{provider}_BASE_URL")  # e.g. "http://localhost:11434/v1"
+    api_key = os.environ.get(f"{provider}_API_KEY", "")
+
+    url = f"{base_url.rstrip('/')}/v1/chat/completions"
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+
+    payload = {
+        "model": os.environ.get(f"{provider}_MODEL"),
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.7,
+    }
+
+    response = requests.post(url, headers=headers, json=payload)
+    response.raise_for_status()
+    return str(response.json()["choices"][0]["message"]["content"])
+</code></pre>
+<blockquote>
+<p>🌟 <strong>核心技巧</strong>：<br/>
+- 用 <code>f"{provider}_BASE_URL"</code> 动态构造 URL（兼容 Ollama、DeepSeek、LlamaCpp 等）<br/>
+- <code>response.raise_for_status()</code> → 自动抛出 HTTP 错误（4xx/5xx）<br/>
+- <code>response.json()["choices"][0]["message"]["content"]</code> → 提取标准 OpenAI 响应格式</p>
+</blockquote>
+<hr/>
+<h3 id="5-5">✅ 步骤 5：写入缓存 + 记录日志（5 行）</h3>
+<pre><code class="language-python"># 在 call_llm() 末尾
+if use_cache:
+    cache = load_cache()
+    cache[prompt] = response_text
+    save_cache(cache)
+
+logger.info(f"PROMPT: {prompt}\nRESPONSE: {response_text}")
+return response_text
+</code></pre>
+<blockquote>
+<p>📝 <strong>日志格式</strong>：<br/>
+<code>2025-04-05 14:30:22,123 - INFO - PROMPT: 请用中文解释 '抽象概念' 是什么？
+2025-04-05 14:30:23,456 - INFO - RESPONSE: 抽象概念是指……</code></p>
+</blockquote>
+<hr/>
+<h2 id="_5">它如何与系统其他部分协作？</h2>
+<p>LLM 调用中枢是<strong>整个系统的“智能引擎”</strong>，它被多个节点调用，形成统一的数据流：</p>
+<div class="mermaid">flowchart LR
+    A[抽象概念识别器] --&gt;|调用 call_llm()| E[LLM 调用中枢]
+    B[关系图谱构建器] --&gt;|调用 call_llm()| E
+    C[教程章节编排师] --&gt;|调用 call_llm()| E
+    D[分步教程生成器] --&gt;|调用 call_llm()| E
+    E --&gt;|返回 response| A
+    E --&gt;|返回 response| B
+    E --&gt;|返回 response| C
+    E --&gt;|返回 response| D
+</div>
+<blockquote>
+<p>🌟 <strong>关键设计原则</strong>：<br/>
+- <strong>统一协议</strong>：所有节点都用 <code>call_llm(prompt, use_cache)</code>，无需关心底层实现<br/>
+- <strong>零侵入</strong>：后续模块<strong>完全不知道</strong>调用的是 Gemini 还是 Ollama<br/>
+- <strong>可扩展</strong>：未来新增 <code>ANTHROPIC</code> 供应商？只需在 <code>call_llm()</code> 中加一个 <code>elif</code> 分支即可！</p>
+</blockquote>
+<hr/>
+<h2 id="_6">小结：你学到了什么？</h2>
+<p>✅ <strong>LLM 调用中枢 = 统一入口 + 智能缓存 + 多供应商支持 + 全流程日志</strong><br/>
+✅ 它让所有节点“只管提需求，不管怎么问”，专注业务逻辑<br/>
+✅ 支持 Gemini / OpenAI / Ollama 等多种 LLM，环境变量一键切换<br/>
+✅ 内置缓存机制避免重复请求，显著降低成本<br/>
+✅ 详细日志记录方便调试和问题回溯  </p>
+<blockquote>
+<p>🚀 下一步：<br/>
+当 LLM 能稳定、高效地被调用后——<br/>
+<strong>谁来分析这些抽象概念之间的依赖关系</strong>？<br/>
+请看 <a href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/">第 7 章：关系图谱构建器</a> —— 它负责<strong>从概念中挖掘“谁依赖谁”的结构</strong>，为后续章节编排打下基础！<br/>
+（提示：它也会调用 <code>call_llm()</code>，但 prompt 更复杂，依赖缓存机制节省成本）</p>
+</blockquote>
+<p>现在，不妨打开 <a href="utils/call_llm.py"><code>utils/call_llm.py</code></a> 文件，试着运行：</p>
+<pre><code class="language-python">if __name__ == "__main__":
+    response = call_llm("请用中文解释 '抽象概念' 是什么？", use_cache=True)
+    print(f"LLM 回答：{response}")
+</code></pre>
+<p>你会看到它像一位沉默的信使，默默把你的问题发给 AI 大脑，并把答案送回来——<br/>
+<strong>没有它，后续所有“智能生成”都无从谈起！</strong> 🧠✨</p>
+<hr/>
+<p>Generated by <a href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

@@ -1,0 +1,1109 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/" rel="prev"/>
+<link href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.5" name="generator"/>
+<title>Chapter 4: 本地文件扫描器 - Tutorial</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#chapter-4">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Tutorial" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Tutorial">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Tutorial
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Chapter 4: 本地文件扫描器
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Tutorial" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Tutorial">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Tutorial
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    LevelDB
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    LevelDB
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/">
+<span class="md-ellipsis">
+    
+  
+    Tutorial: leveldb
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/01_%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%B8%E5%BF%83%E8%AF%BB%E5%86%99%E5%BC%95%E6%93%8E/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 1: 数据库核心读写引擎
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/02_writebatch%E5%8E%9F%E5%AD%90%E6%89%B9%E9%87%8F%E5%86%99%E5%85%A5/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: WriteBatch原子批量写入
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/03_%E9%A2%84%E5%86%99%E6%97%A5%E5%BF%97_wal/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 3: 预写日志（WAL）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/04_memtable%E5%86%85%E5%AD%98%E8%A1%A8%E4%B8%8E%E8%B7%B3%E8%A1%A8/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: MemTable内存表与跳表
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/05_sstable%E6%8E%92%E5%BA%8F%E8%A1%A8%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 5: SSTable排序表文件格式
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/06_%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E4%B8%8Emanifest/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: 版本管理与MANIFEST
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/07_%E5%90%88%E5%B9%B6%E5%8E%8B%E7%BC%A9_compaction/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 7: 合并压缩（Compaction）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/08_%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%B1%82%E6%AC%A1%E4%BD%93%E7%B3%BB/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 8: 迭代器层次体系
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/09_%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E7%AD%96%E7%95%A5/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 9: 布隆过滤器与过滤策略
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../leveldb/10_lru%E7%BC%93%E5%AD%98%E4%B8%8Etablecache/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 10: LRU缓存与TableCache
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    PocketFlow 教程
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    PocketFlow 教程
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    
+  
+    Tutorial: PocketFlow-Tutorial-Codebase-Knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01_%E7%94%A8%E6%88%B7%E4%BA%A4%E4%BA%92%E5%85%A5%E5%8F%A3_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 1: 用户交互入口
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02_%E4%B8%BB%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 2: 主流程控制器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 3: 代码仓库抓取引擎
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: 本地文件扫描器
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Chapter 4: 本地文件扫描器
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        为什么需要“本地文件扫描器”？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      
+        举个栗子 🌰：你想分析本地代码，系统该怎么做？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      
+        核心功能：它能做什么？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3">
+<span class="md-ellipsis">
+      
+        怎么用它？——3 分钟上手
+      
+    </span>
+</a>
+<nav aria-label="怎么用它？——3 分钟上手" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+<span class="md-ellipsis">
+      
+        ✅ 示例：扫描当前目录，忽略测试文件和大文件
+      
+    </span>
+</a>
+<nav aria-label="✅ 示例：扫描当前目录，忽略测试文件和大文件" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+<span class="md-ellipsis">
+      
+        输出结果（简化版）：
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+<span class="md-ellipsis">
+      
+        内部工作流：它怎么运作的？
+      
+    </span>
+</a>
+<nav aria-label="内部工作流：它怎么运作的？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+<span class="md-ellipsis">
+      
+        📌 关键细节（新手必读）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+<span class="md-ellipsis">
+      
+        代码拆解：只看最关键的几行！
+      
+    </span>
+</a>
+<nav aria-label="代码拆解：只看最关键的几行！" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-gitignore5">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 1：加载 .gitignore（5 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-6">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 2：遍历文件 + 筛选（核心！6 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#33">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 3：读取文件内容（3 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#43">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 4：实时打印进度（3 行）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+<span class="md-ellipsis">
+      
+        它如何与系统其他部分协作？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+<span class="md-ellipsis">
+      
+        小结：你学到了什么？
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 5: 抽象概念识别器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06_llm_%E8%B0%83%E7%94%A8%E4%B8%AD%E6%9E%A2_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 6: LLM 调用中枢
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 7: 关系图谱构建器
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08_%E6%95%99%E7%A8%8B%E7%AB%A0%E8%8A%82%E7%BC%96%E6%8E%92%E5%B8%88_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 8: 教程章节编排师
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09_%E5%88%86%E6%AD%A5%E6%95%99%E7%A8%8B%E7%94%9F%E6%88%90%E5%99%A8_%E6%89%B9%E5%A4%84%E7%90%86__/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 9: 分步教程生成器（批处理）
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10_%E6%95%99%E7%A8%8B%E6%95%B4%E5%90%88%E5%8F%91%E5%B8%83%E5%99%A8_/">
+<span class="md-ellipsis">
+    
+  
+    Chapter 10: 教程整合发布器
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        为什么需要“本地文件扫描器”？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      
+        举个栗子 🌰：你想分析本地代码，系统该怎么做？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      
+        核心功能：它能做什么？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3">
+<span class="md-ellipsis">
+      
+        怎么用它？——3 分钟上手
+      
+    </span>
+</a>
+<nav aria-label="怎么用它？——3 分钟上手" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_4">
+<span class="md-ellipsis">
+      
+        ✅ 示例：扫描当前目录，忽略测试文件和大文件
+      
+    </span>
+</a>
+<nav aria-label="✅ 示例：扫描当前目录，忽略测试文件和大文件" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_5">
+<span class="md-ellipsis">
+      
+        输出结果（简化版）：
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_6">
+<span class="md-ellipsis">
+      
+        内部工作流：它怎么运作的？
+      
+    </span>
+</a>
+<nav aria-label="内部工作流：它怎么运作的？" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_7">
+<span class="md-ellipsis">
+      
+        📌 关键细节（新手必读）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_8">
+<span class="md-ellipsis">
+      
+        代码拆解：只看最关键的几行！
+      
+    </span>
+</a>
+<nav aria-label="代码拆解：只看最关键的几行！" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-gitignore5">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 1：加载 .gitignore（5 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-6">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 2：遍历文件 + 筛选（核心！6 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#33">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 3：读取文件内容（3 行）
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#43">
+<span class="md-ellipsis">
+      
+        ✅ 步骤 4：实时打印进度（3 行）
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_9">
+<span class="md-ellipsis">
+      
+        它如何与系统其他部分协作？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_10">
+<span class="md-ellipsis">
+      
+        小结：你学到了什么？
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="chapter-4">Chapter 4: 本地文件扫描器</h1>
+<p>上一章我们认识了系统的“图书管理员”——<a href="../03_%E4%BB%A3%E7%A0%81%E4%BB%93%E5%BA%93%E6%8A%93%E5%8F%96%E5%BC%95%E6%93%8E_/">代码仓库抓取引擎</a>。它像一位勤快的搬运工，把远程 GitHub 仓库里的文件<strong>拉到本地</strong>，为后续分析打下基础。<br/>
+但你有没有想过：  </p>
+<blockquote>
+<p>🤔 <em>如果我正在本地反复调试一个项目，难道每次都要重新下载一遍 GitHub？太浪费时间了！</em></p>
+</blockquote>
+<p>别急！<br/>
+这位“<strong>本地文件扫描器</strong>”正是为解决这个问题而生——它像一位<strong>高效、智能的本地勘探员</strong>，快速扫描你电脑里已缓存的代码文件，并<strong>跳过无关内容</strong>（比如 <code>.gitignore</code> 忽略项、大文件），输出与远程抓取<strong>完全一致的结构化数据</strong>，让后续流程“无缝衔接”。</p>
+<hr/>
+<h2 id="_1">为什么需要“本地文件扫描器”？</h2>
+<p>想象你正在开发一个新功能，反复修改本地代码：  </p>
+<pre><code class="language-bash"># 你本地有缓存好的项目副本（比如上一次用抓取引擎拉下来的）
+your-project/
+├── src/
+│   ├── main.py
+│   └── handler.py
+├── tests/
+│   └── test_main.py   # ← 测试文件，不该被分析！
+├── .gitignore         # ← 包含 "tests/*" 规则
+└── large_model.bin    # ← 50MB，太大了！跳过！
+</code></pre>
+<p>如果每次重新分析都：
+1. ❌ 重新联网下载所有文件（慢！）
+2. ❌ 手动过滤测试文件和大文件（累！）
+3. ❌ 忘记 <code>.gitignore</code> 规则（出错！）</p>
+<p>——那体验太痛苦了！</p>
+<blockquote>
+<p>💡 <strong>一句话使命</strong>：<br/>
+<strong>本地文件扫描器 = 一位熟悉 <code>.gitignore</code> 的本地勘探员 + 一位懂得尺寸限制的安检员</strong><br/>
+它<strong>秒级扫描本地目录</strong>，智能跳过无关项，输出干净、结构化的文件数据，供后续“抽象提炼”直接使用。</p>
+</blockquote>
+<hr/>
+<h2 id="_2">举个栗子 🌰：你想分析本地代码，系统该怎么做？</h2>
+<p>你运行了这条命令（还记得吧？）：</p>
+<pre><code class="language-bash">python main.py --dir ./your-project --language chinese
+</code></pre>
+<p><strong>本地文件扫描器</strong>立刻行动：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>它做了什么？</th>
+<th>类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🚪 出发</td>
+<td>扫描 <code>./your-project</code> 目录</td>
+<td>🧭 探险家打开地图</td>
+</tr>
+<tr>
+<td>📜 读取 <code>.gitignore</code></td>
+<td>自动加载并应用忽略规则</td>
+<td>📜 快速查阅项目约定</td>
+</tr>
+<tr>
+<td>✂️ 筛选</td>
+<td>跳过 <code>tests/*</code>、<code>large_model.bin</code> 等</td>
+<td>🔍 用筛子过滤沙石</td>
+</tr>
+<tr>
+<td>📦 打包</td>
+<td>把每个文件变成 <code>路径 → 内容</code> 键值对</td>
+<td>📁 把精选矿石编号装箱</td>
+</tr>
+<tr>
+<td>📤 上交</td>
+<td>返回给主流程控制器：<code>{"files": {"src/main.py": "#!/usr/bin/env python\n...", ...}}</code></td>
+<td>📬 把矿石清单交给下一位</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>✅ <strong>最终交付物</strong>：一个字典，键是<strong>文件相对路径</strong>，值是<strong>文件完整文本内容</strong><br/>
+（例如：<code>"src/handler.py": "def login(user): ..."</code>）</p>
+</blockquote>
+<hr/>
+<h2 id="_3">核心功能：它能做什么？</h2>
+<p>本地文件扫描器（即 <a href="utils/crawl_local_files.py"><code>crawl_local_files()</code></a>）就像一位<strong>多面手</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+<th>为什么重要？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📂 快速扫描本地目录</td>
+<td>直接读磁盘，无需网络请求</td>
+<td>⚡ 比 GitHub 抓取快 10 倍+</td>
+</tr>
+<tr>
+<td>📜 智能读取 <code>.gitignore</code></td>
+<td>自动跳过版本控制忽略项</td>
+<td>🧠 更懂项目习惯</td>
+</tr>
+<tr>
+<td>🚫 智能过滤</td>
+<td>排除 <code>tests/*</code>、<code>__pycache__/</code> 等无关内容</td>
+<td>🧹 聚焦核心逻辑</td>
+</tr>
+<tr>
+<td>📏 文件大小限制</td>
+<td>默认跳过 &gt;1MB 的文件（可配置）</td>
+<td>🛡️ 防止内存溢出</td>
+</tr>
+<tr>
+<td>📁 路径归一化</td>
+<td>支持相对路径（<code>use_relative_paths=True</code>）</td>
+<td>🗺️ 便于后续处理</td>
+</tr>
+<tr>
+<td>📊 实时反馈进度</td>
+<td>显示“已处理 X/Y (Z%)”</td>
+<td>📈 心中有数不焦虑</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>关键理念</strong>：<br/>
+它<strong>不关心代码含义</strong>——只负责<strong>安全、高效、干净地把本地代码“扫描”成可读数据</strong>。<br/>
+后续的 <a href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/">抽象概念识别器</a>、<a href="../07_%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E5%99%A8_/">关系图谱构建器</a> 都依赖它提供的<strong>干净、结构化的文件集合</strong>。</p>
+</blockquote>
+<hr/>
+<h2 id="3">怎么用它？——3 分钟上手</h2>
+<p>我们用一个<strong>极简示例</strong>演示它的用法（完整实现在 <a href="utils/crawl_local_files.py"><code>utils/crawl_local_files.py</code></a>）：</p>
+<h3 id="_4">✅ 示例：扫描当前目录，忽略测试文件和大文件</h3>
+<pre><code class="language-python">from utils.crawl_local_files import crawl_local_files
+
+result = crawl_local_files(
+    directory=".",  # 当前目录
+    exclude_patterns={"tests/*", "*.pyc", "__pycache__/*"},
+    max_file_size=100_000  # 100KB
+)
+</code></pre>
+<h4 id="_5">输出结果（简化版）：</h4>
+<pre><code class="language-python">{
+  "files": {
+    "main.py": "#!/usr/bin/env python\n...",
+    "flow.py": "from pocketflow import Flow\n...",
+    "README.md": "# PocketFlow Tutorial..."
+  },
+  # 注意：stats 字段未返回，但内部已统计
+}
+</code></pre>
+<blockquote>
+<p>📝 <strong>重点看 <code>files</code> 字典</strong>：<br/>
+- 键：<strong>文件相对路径</strong>（<code>"main.py"</code> 而非完整绝对路径）<br/>
+- 值：<strong>纯文本内容</strong>（UTF-8 编码，已自动解码）<br/>
+- 顺序：无要求（字典是无序的，但后续处理不依赖顺序）</p>
+<p>🔍 <strong>对比 GitHub 版本</strong>：<br/>
+- 本地版<strong>不依赖网络</strong>（直接读磁盘）<br/>
+- 本地版<strong>自动支持 <code>.gitignore</code> 规则</strong>（更智能！）<br/>
+- 两者返回<strong>完全一致的数据结构</strong> → 后续模块<strong>无需区分来源</strong>！</p>
+</blockquote>
+<hr/>
+<h2 id="_6">内部工作流：它怎么运作的？</h2>
+<p>我们用一个极简流程图，看它如何“扫描 → 读 <code>.gitignore</code> → 筛选 → 打包”：</p>
+<div class="mermaid">sequenceDiagram
+    participant U as 用户命令 (main.py)
+    participant LE as 本地文件扫描器
+    participant GitIgnore as .gitignore 解析器
+    participant Filter as 筛选器 (大小/路径/模式)
+    participant Dict as 返回的 files 字典
+
+    U-&gt;&gt;LE: crawl_local_files(directory, ...)
+    LE-&gt;&gt;GitIgnore: 读取并解析 .gitignore
+    GitIgnore--&gt;&gt;LE: 返回 pathspec 规则
+    LE-&gt;&gt;Filter: 遍历所有文件
+    loop 对每个文件
+        Filter-&gt;&gt;Filter: 检查：是否被 .gitignore 排除？
+        Filter-&gt;&gt;Filter: 检查：是否匹配 exclude_patterns？
+        Filter-&gt;&gt;Filter: 检查：文件大小是否超限？
+        alt 通过所有检查
+            Filter-&gt;&gt;Dict: 添加 {"path": "content"}
+        else 跳过
+            Filter--&gt;&gt;U: 打印“Progress: X/Y (%) [skipped ...]”
+        end
+    end
+    LE--&gt;&gt;U: 返回 {"files": {...}}
+</div>
+<h3 id="_7">📌 关键细节（新手必读）</h3>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>.gitignore</code> 里写 <code>logs/</code>，但实际是 <code>log/</code> 会匹配吗？</strong></td>
+<td><code>pathspec</code> 模块支持通配符（<code>*</code>、<code>**</code>），自动匹配路径段</td>
+</tr>
+<tr>
+<td><strong>中文文件名会乱码吗？</strong></td>
+<td>全程使用 <code>utf-8-sig</code> 编码（自动跳过 BOM）</td>
+</tr>
+<tr>
+<td><strong>为什么比 GitHub 抓取快？</strong></td>
+<td>直接 <code>os.walk()</code> 读磁盘，<strong>无需网络请求</strong></td>
+</tr>
+<tr>
+<td><strong>进度条怎么来的？</strong></td>
+<td>用 ANSI 转义码 <code>\033[92m</code> 打印绿色进度（终端友好）</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="_8">代码拆解：只看最关键的几行！</h2>
+<p>我们聚焦 <a href="utils/crawl_local_files.py"><code>crawl_local_files()</code></a> 中的<strong>核心逻辑</strong>（简化版）：</p>
+<h3 id="1-gitignore5">✅ 步骤 1：加载 <code>.gitignore</code>（5 行）</h3>
+<pre><code class="language-python">gitignore_path = os.path.join(directory, ".gitignore")
+gitignore_spec = None
+if os.path.exists(gitignore_path):
+    with open(gitignore_path, "r", encoding="utf-8-sig") as f:
+        gitignore_patterns = f.readlines()
+    gitignore_spec = pathspec.PathSpec.from_lines("gitwildmatch", gitignore_patterns)
+</code></pre>
+<blockquote>
+<p>📝 <strong>注释已翻译</strong>：<br/>
+- <code>os.path.exists()</code> 检查 <code>.gitignore</code> 是否存在<br/>
+- <code>pathspec</code> 是 Python 库，专为解析 <code>.gitignore</code> 格式设计<br/>
+- <code>"gitwildmatch"</code> 是它的内置模式语言（支持 <code>*</code>、<code>**</code>、<code>/</code> 等）</p>
+</blockquote>
+<hr/>
+<h3 id="2-6">✅ 步骤 2：遍历文件 + 筛选（核心！6 行）</h3>
+<pre><code class="language-python">for filepath in all_files:
+    relpath = os.path.relpath(filepath, directory)  # 转为相对路径
+
+    # 检查 .gitignore 和 exclude_patterns
+    excluded = gitignore_spec.match_file(relpath) or any(fnmatch.fnmatch(relpath, p) for p in exclude_patterns)
+    if excluded:
+        continue  # 跳过被排除的文件
+
+    # 检查文件大小
+    if os.path.getsize(filepath) &gt; max_file_size:
+        continue  # 跳过超大文件
+</code></pre>
+<blockquote>
+<p>🌟 <strong>核心技巧</strong>：<br/>
+- <code>gitignore_spec.match_file("tests/test_main.py")</code> → 若 <code>.gitignore</code> 含 <code>tests/*</code>，返回 <code>True</code><br/>
+- <code>fnmatch.fnmatch("main.pyc", "*.pyc")</code> → 匹配通配符<br/>
+- 先 <code>.gitignore</code> 再 <code>exclude_patterns</code>，双重保险！</p>
+</blockquote>
+<hr/>
+<h3 id="33">✅ 步骤 3：读取文件内容（3 行）</h3>
+<pre><code class="language-python">with open(filepath, "r", encoding="utf-8-sig") as f:
+    content = f.read()
+files_dict[relpath] = content
+</code></pre>
+<blockquote>
+<p>💡 <strong>关键点</strong>：<br/>
+- <code>utf-8-sig</code> 自动处理 Windows 的 BOM 头（避免乱码）<br/>
+- <code>content</code> 是<strong>纯文本字符串</strong>（非字节流）</p>
+</blockquote>
+<hr/>
+<h3 id="43">✅ 步骤 4：实时打印进度（3 行）</h3>
+<pre><code class="language-python">percentage = (processed_files / total_files) * 100
+print(f"\033[92mProgress: {processed_files}/{total_files} ({int(percentage)}%) {relpath} [processed]\033[0m")
+</code></pre>
+<blockquote>
+<p>📊 <strong>效果</strong>：<br/>
+终端会显示绿色进度条：<br/>
+<code>Progress: 12/50 (24%) src/main.py [processed]</code><br/>
+让你知道系统没卡住！</p>
+</blockquote>
+<hr/>
+<h2 id="_9">它如何与系统其他部分协作？</h2>
+<p>本地文件扫描器是<strong>整个流程的“本地加速器”</strong>，它输出的数据直接喂给后续节点：</p>
+<div class="mermaid">flowchart LR
+    A[用户命令 --dir] --&gt; B[本地文件扫描器]
+    B --&gt;|返回 files 字典| C[主流程控制器]
+    C --&gt; D[抽象概念识别器]
+    D --&gt;|读取 files| E[LLM 调用中枢]
+</div>
+<blockquote>
+<p>🌟 <strong>关键设计原则</strong>：<br/>
+- <strong>统一数据接口</strong>：无论是 GitHub 还是本地，都返回 <code>{"files": {...}}</code><br/>
+- <strong>零侵入</strong>：后续模块<strong>完全不知道</strong>数据来自 GitHub 还是本地<br/>
+- <strong>可扩展</strong>：未来新增“SVN 扫描器”？只需实现同样接口即可！</p>
+</blockquote>
+<hr/>
+<h2 id="_10">小结：你学到了什么？</h2>
+<p>✅ <strong>本地文件扫描器 = 本地缓存的“高效勘探员”</strong><br/>
+✅ 它负责把本地混乱的文件系统，变成<strong>干净、结构化、可读的文件集合</strong><br/>
+✅ 自动支持 <code>.gitignore</code> + 手动过滤规则，跳过测试/大文件<br/>
+✅ 返回 <code>{"files": {path: content}}</code>，供后续模块直接使用  </p>
+<blockquote>
+<p>🚀 下一步：<br/>
+当代码文件被安全、干净地“扫描”到内存后——<br/>
+<strong>谁来从这些代码中“提炼出抽象概念”</strong>？<br/>
+请看 <a href="../05_%E6%8A%BD%E8%B1%A1%E6%A6%82%E5%BF%B5%E8%AF%86%E5%88%AB%E5%99%A8_/">第 5 章：抽象概念识别器</a> —— 它负责<strong>从代码中发现“用户登录”“权限校验”等业务概念</strong>，是整个系统的“知识提炼机”！</p>
+</blockquote>
+<p>现在，不妨打开 <a href="utils/crawl_local_files.py"><code>utils/crawl_local_files.py</code></a> 文件，试着运行：</p>
+<pre><code class="language-python">if __name__ == "__main__":
+    result = crawl_local_files(
+        ".",
+        exclude_patterns={"tests/*", "*.pyc"}
+    )
+    print(f"扫描了 {len(result['files'])} 个文件")
+</code></pre>
+<p>你会看到它像一位安静的勘探员，默默把本地矿脉一铲一铲挖出来——<br/>
+<strong>没有它，本地开发就只能反复联网拉取，效率低下！</strong> 🗺️✨</p>
+<hr/>
+<p>Generated by <a href="https://github.com/The-Pocket/Tutorial-Codebase-Knowledge">AI Codebase Knowledge Builder</a></p>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>
