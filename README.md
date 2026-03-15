@@ -31,6 +31,33 @@
 
 输出目录是 `site/`。
 
+## 发布到 GitHub Pages
+
+仓库里已经加了 GitHub Actions 工作流：
+
+- 工作流文件：[.github/workflows/deploy-pages.yml](/home/tz/dev/tutorial/.github/workflows/deploy-pages.yml)
+- 触发条件：推送到 `main` 分支，或手动执行 `Actions`
+
+启用步骤：
+
+1. 把仓库推到 GitHub。
+2. 进入 GitHub 仓库 `Settings -> Pages`。
+3. 在 `Build and deployment` 里把 `Source` 设为 `GitHub Actions`。
+4. 推送一次到 `main`，等待 `Deploy MkDocs to GitHub Pages` 工作流完成。
+
+发布地址通常是：
+
+- 项目页：`https://<你的 GitHub 用户名>.github.io/<仓库名>/`
+- 用户页：如果仓库名就是 `<你的 GitHub 用户名>.github.io`，地址就是根域名
+
+如果你想用命令行手动发布，也可以在本地执行：
+
+```bash
+./venv/bin/mkdocs gh-deploy
+```
+
+但手动方式会把内容发布到 `gh-pages` 分支，需要本地已经配置好 GitHub 远程仓库和推送权限。
+
 ## 技术栈
 
 - `MkDocs`
