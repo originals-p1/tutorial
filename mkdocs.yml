@@ -1,19 +1,33 @@
-site_name: LevelDB Tutorial
+site_name: Database Tutorials
 site_dir: site
-docs_dir: docs/leveldb
+docs_dir: docs
 
 nav:
-  - Home: index.md
-  - 01_数据库核心读写引擎.md
-  - 02_writebatch原子批量写入.md
-  - 03_预写日志_wal.md
-  - 04_memtable内存表与跳表.md
-  - 05_sstable排序表文件格式.md
-  - 06_版本管理与manifest.md
-  - 07_合并压缩_compaction.md
-  - 08_迭代器层次体系.md
-  - 09_布隆过滤器与过滤策略.md
-  - 10_lru缓存与tablecache.md
+  - 首页: index.md
+  - LevelDB 教程:
+      - 概览: leveldb/index.md
+      - 数据库核心读写引擎: leveldb/01_数据库核心读写引擎.md
+      - WriteBatch 原子批量写入: leveldb/02_writebatch原子批量写入.md
+      - 预写日志 WAL: leveldb/03_预写日志_wal.md
+      - MemTable 内存表与跳表: leveldb/04_memtable内存表与跳表.md
+      - SSTable 排序表文件格式: leveldb/05_sstable排序表文件格式.md
+      - 版本管理与 MANIFEST: leveldb/06_版本管理与manifest.md
+      - 合并压缩 Compaction: leveldb/07_合并压缩_compaction.md
+      - 迭代器层次体系: leveldb/08_迭代器层次体系.md
+      - 布隆过滤器与过滤策略: leveldb/09_布隆过滤器与过滤策略.md
+      - LRU 缓存与 TableCache: leveldb/10_lru缓存与tablecache.md
+  - Redis 教程:
+      - 概览: redis/index.md
+      - Redis 核心架构与事件循环: redis/01_redis核心架构与事件循环.md
+      - 基础数据结构: redis/02_基础数据结构_sds_链表_字典.md
+      - 对象系统: redis/03_对象系统_五大数据类型.md
+      - 持久化 RDB 与 AOF: redis/04_持久化_rdb与aof.md
+      - 主从复制机制: redis/05_主从复制机制.md
+      - 哨兵与高可用: redis/06_哨兵与高可用.md
+      - 集群分片: redis/07_集群分片.md
+      - 过期策略与内存淘汰: redis/08_过期策略与内存淘汰.md
+      - 事务与 Lua 脚本: redis/09_事务与lua脚本.md
+      - 发布订阅系统: redis/10_发布订阅系统.md
 
 theme:
   name: material
@@ -28,6 +42,9 @@ theme:
 plugins:
   - search
   - mermaid2
+
+extra_css:
+  - stylesheets/tutorial.css
 
 markdown_extensions:
   - pymdownx.superfences:
