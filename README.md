@@ -1,72 +1,92 @@
-# LevelDB 教程文档
+# 数据库源码教程
 
-这是一份深入浅出的 LevelDB 源码教程，采用场景驱动、原理优先、图文并茂的教学风格。
+这个仓库现在包含两套源码阅读教程：
 
-## 特色
+- **LevelDB 教程**：围绕 LSM、WAL、MemTable、SSTable、Compaction、缓存与迭代器展开
+- **Redis 教程**：围绕事件循环、基础数据结构、对象系统、持久化、复制、高可用、集群、事务与 Pub/Sub 展开
 
-- 🎯 **场景驱动**：每章从真实问题出发
-- 🧠 **原理优先**：解释"为什么"而非仅"怎么做"
-- 📊 **图文并茂**：使用 Mermaid 图表可视化流程
-- 💡 **类比丰富**：用熟悉事物解释陌生概念
-- 🔗 **前后呼应**：章节间建立知识连贯性
+文档站使用 MkDocs + Material for MkDocs 构建，站点入口统一在 `docs/` 下。
 
 ## 快速开始
 
-### 启动文档服务器
+启动本地文档服务：
 
 ```bash
 ./start.sh
 ```
 
-然后访问 http://localhost:8000
+然后访问 `http://localhost:8000`。
 
-### 停止服务器
+停止服务：
 
 ```bash
 ./stop.sh
 ```
 
-### 构建静态网站
+构建静态站点：
 
 ```bash
 ./venv/bin/mkdocs build
 ```
 
-生成的静态文件在 `site/` 目录。
+输出目录是 `site/`。
 
 ## 技术栈
 
-- **MkDocs**: 文档生成器
-- **Material for MkDocs**: 现代化主题
-- **Mermaid**: 图表渲染支持
+- `MkDocs`
+- `Material for MkDocs`
+- `Mermaid`
 
 ## 目录结构
 
-```
+```text
 tutorial/
-├── docs/leveldb/          # 教程 Markdown 文件
-│   ├── index.md          # 首页
-│   ├── 01_*.md           # 第 1-10 章
-│   └── ...
-├── mkdocs.yml            # MkDocs 配置
-├── venv/                 # Python 虚拟环境
-├── start.sh              # 启动脚本
-└── stop.sh               # 停止脚本
+├── docs/
+│   ├── index.md              # 站点首页
+│   ├── leveldb/              # LevelDB 教程
+│   │   ├── index.md
+│   │   └── 01_*.md ~ 10_*.md
+│   └── redis/                # Redis 教程
+│       ├── index.md
+│       └── 01_*.md ~ 10_*.md
+├── docs/stylesheets/
+│   └── tutorial.css          # 图表与表格样式增强
+├── mkdocs.yml                # MkDocs 配置
+├── start.sh                  # 本地预览脚本
+├── stop.sh                   # 停止脚本
+└── venv/                     # Python 虚拟环境
 ```
 
-## 章节列表
+## 教程目录
 
-1. 数据库核心引擎 (DBImpl)
-2. WriteBatch 批量写入
-3. 预写日志 WAL / Log
-4. 内存表 MemTable 与跳表 SkipList
-5. SSTable 排序表与数据块
-6. 版本管理 VersionSet 与 Version
-7. 压缩机制 Compaction
-8. 迭代器体系 Iterator
-9. 缓存与布隆过滤器
-10. 环境抽象层 Env
+### LevelDB
 
----
+1. 数据库核心读写引擎
+2. WriteBatch 原子批量写入
+3. 预写日志 WAL
+4. MemTable 内存表与跳表
+5. SSTable 排序表文件格式
+6. 版本管理与 MANIFEST
+7. 合并压缩 Compaction
+8. 迭代器层次体系
+9. 布隆过滤器与过滤策略
+10. LRU 缓存与 TableCache
 
-开始学习：[第 1 章：数据库核心引擎](docs/leveldb/01_数据库核心引擎_dbimpl__.md)
+### Redis
+
+1. Redis 核心架构与事件循环
+2. 基础数据结构：SDS、链表、字典
+3. 对象系统与五大数据类型
+4. 持久化：RDB 与 AOF
+5. 主从复制机制
+6. 哨兵与高可用
+7. 集群分片
+8. 过期策略与内存淘汰
+9. 事务与 Lua 脚本
+10. 发布订阅系统
+
+## 入口
+
+- 站点首页：[docs/index.md](/home/tz/dev/tutorial/docs/index.md)
+- LevelDB 概览：[docs/leveldb/index.md](/home/tz/dev/tutorial/docs/leveldb/index.md)
+- Redis 概览：[docs/redis/index.md](/home/tz/dev/tutorial/docs/redis/index.md)
