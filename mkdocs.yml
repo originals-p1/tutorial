@@ -1,16 +1,37 @@
 site_name: LevelDB Tutorial
 site_dir: site
 docs_dir: docs/leveldb
+
 nav:
   - Home: index.md
-  - 01_数据库核心引擎_dbimpl__.md
-  - 02_writebatch_批量写入__.md
-  - 03_预写日志_wal___log__.md
-  - 04_内存表_memtable_与跳表_skiplist__.md
-  - 05_sstable_排序表_与数据块_.md
-  - 06_版本管理_versionset_与_version__.md
-  - 07_压缩机制_compaction__.md
-  - 08_迭代器体系_iterator__.md
-  - 09_缓存与布隆过滤器_.md
-  - 10_环境抽象层_env__.md
-theme: readthedocs
+  - 01_数据库核心读写引擎.md
+  - 02_writebatch原子批量写入.md
+  - 03_预写日志_wal.md
+  - 04_memtable内存表与跳表.md
+  - 05_sstable排序表文件格式.md
+  - 06_版本管理与manifest.md
+  - 07_合并压缩_compaction.md
+  - 08_迭代器层次体系.md
+  - 09_布隆过滤器与过滤策略.md
+  - 10_lru缓存与tablecache.md
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - content.code.copy
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
